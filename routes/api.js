@@ -21,11 +21,27 @@ router.get('/:resource', function(req, res, next) {
       });
     });
   }
+});
+router.get('/:resource/:id', function(req, res, next) {
+  var resource = req.params.resource;
+  var id = req.params.id;
 
-  // res.json({
-  //   confirmation: 'success',
-  //   resource: resource
-  // });
+  if (resource == 'zone') {
+    zoneController.findById(id, function(err, result) {
+      if (err) {
+        res.json({
+          confirmation: 'fail',
+          message: 'Not Found'
+        });
+        return;
+      }
+
+      res.json({
+        confirmation: 'success',
+        result: result
+      });
+    });
+  }
 });
 
 module.exports = router;
